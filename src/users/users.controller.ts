@@ -8,6 +8,7 @@ import {
   Query,
   Body,
   NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
@@ -25,9 +26,9 @@ export class UsersController {
 
   // GET /users/:id -> {...}
   @Get(':id')
-  getOneUser(@Param('id') id: string) {
+  getOneUser(@Param('id', ParseIntPipe) id: number) {
     try {
-      return this.usersService.getOneUser(+id);
+      return this.usersService.getOneUser(id);
     } catch (error) {
       throw new NotFoundException();
     }
